@@ -25,33 +25,14 @@ trait CanManageEvents
     public ?int $event_id = null;
     public ?Model $event = null;
 
-    protected function setUpForms(): void
-    {
-        if (static::canCreate()) {
-            $this->createEventForm->fill();
-        }
-
-        if (static::canEdit()) {
-            $this->editEventForm->fill();
-        }
-    }
-
-    protected function getForms(): array
-    {
-        return array_merge(
-            $this->getCreateEventForm(),
-            $this->getEditEventForm()
-        );
-    }
-
     public function onEventClick($event): void
     {
-        if (! static::canView($event)) {
+        if (!static::canView($event)) {
             return;
         }
 
         $this->editEventForm
-            ->disabled(! static::canEdit($event))
+            ->disabled(!static::canEdit($event) || !static::canDrop($event) || !static::canResize($event))
             ->fill($event);
 
         if (method_exists($this, 'resolveEventRecord')) {
@@ -65,7 +46,7 @@ trait CanManageEvents
 
     public function onCreateEventClick(array $date): void
     {
-        if (! static::canCreate()) {
+        if (!static::canCreate()) {
             return;
         }
 
@@ -100,5 +81,32 @@ trait CanManageEvents
 
             $calendar->createEventForm->fill(['start' => $start, 'end' => $end]);
         };
+    }
+
+    protected function setUpForms(): void
+    {
+        if (static::canCreate()) {
+            $this->createEventForm->fill();
+        }
+
+        if (static::canEdit()) {
+            $this->editEventForm->fill();
+        }
+
+        if (static::canDrop()) {
+            $this->editEventForm->fill();
+        }
+
+        if (static::canResize()) {
+            $this->editEventForm->fill();
+        }
+    }
+
+    protected function getForms(): array
+    {
+        return array_merge(
+            $this->getCreateEventForm(),
+            $this->getEditEventForm()
+        );
     }
 }
