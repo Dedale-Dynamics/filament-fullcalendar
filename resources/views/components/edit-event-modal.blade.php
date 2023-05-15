@@ -7,7 +7,8 @@
         </x-slot>
 
         @if($this->isListeningCancelledEditModal())
-            <div x-on:close-modal.window="if ($event.detail.id === 'fullcalendar--create-event-modal') Livewire.emit('cancelledFullcalendarEditEventModal')"></div>
+            <div
+                x-on:close-modal.window="if ($event.detail.id === 'fullcalendar--create-event-modal') Livewire.emit('cancelledFullcalendarEditEventModal')"></div>
         @endif
 
         {{ $this->editEventForm }}
@@ -30,5 +31,8 @@
                 </x-filament::button>
             @endif
         </x-slot>
+        <x-filament::button color="danger" x-on:click="isOpen = false; Livewire.emit('onDeleteEvent')">
+            Delete
+        </x-filament::button>
     </x-filament::modal>
 </x-filament::form>
