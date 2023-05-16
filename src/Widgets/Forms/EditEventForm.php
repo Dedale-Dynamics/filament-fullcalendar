@@ -11,7 +11,7 @@ trait EditEventForm
     public function onEditEventSubmit(): void
     {
         $this->editEvent($this->editEventForm->getState());
-
+        $this->deleteEvent($this->editEventForm->getState());
         $this->dispatchBrowserEvent('close-modal', ['id' => 'fullcalendar--edit-event-modal']);
     }
 
@@ -20,17 +20,11 @@ trait EditEventForm
         // Override this function and do whatever you want with $data
     }
 
-    public function onDeleteEvent(): void
-    {
-        $this->deleteEvent($this->editEventForm->getState());
-
-        $this->dispatchBrowserEvent('close-modal', ['id' => 'fullcalendar--edit-event-modal']);
-    }
-
     public function deleteEvent(array $data): void
     {
         // Override this function and do whatever you want with $data
     }
+
 
     public function getEditEventModalTitle(): string
     {

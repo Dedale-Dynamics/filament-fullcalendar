@@ -15,7 +15,7 @@
 
         <x-slot name="footer">
             @if(static::canDelete())
-                <x-filament::button color="danger" x-on:click="isOpen = false; Livewire.emit('onDeleteEvent')">
+                <x-filament::button color="danger" type="submit" form="onEditEventSubmit">
                     Supprimer
                 </x-filament::button>
             @endif
