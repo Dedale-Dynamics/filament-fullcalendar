@@ -20,25 +20,16 @@ trait EditEventForm
         // Override this function and do whatever you want with $data
     }
 
-    protected static function getEditEventFormSchema(): array
+    public function onDeleteEvent(): void
     {
-        return [
-            Forms\Components\TextInput::make('title')
-                ->required(),
-            Forms\Components\DateTimePicker::make('start')
-                ->required(),
-            Forms\Components\DateTimePicker::make('end')
-                ->default(null),
-        ];
+        $this->deleteEvent($this->editEventForm->getState());
+
+        $this->dispatchBrowserEvent('close-modal', ['id' => 'fullcalendar--edit-event-modal']);
     }
 
-    protected function getEditEventForm(): array
+    public function deleteEvent(array $data): void
     {
-        return [
-            'editEventForm' => $this->makeForm()
-                ->schema(static::getEditEventFormSchema())
-                ->statePath('editEventFormState'),
-        ];
+        // Override this function and do whatever you want with $data
     }
 
     public function getEditEventModalTitle(): string
@@ -58,5 +49,26 @@ trait EditEventForm
         return $this->editEventForm->isDisabled()
             ? __('filament-support::actions/view.single.modal.actions.close.label')
             : __('filament::resources/pages/edit-record.form.actions.cancel.label');
+    }
+
+    protected function getEditEventForm(): array
+    {
+        return [
+            'editEventForm' => $this->makeForm()
+                ->schema(static::getEditEventFormSchema())
+                ->statePath('editEventFormState'),
+        ];
+    }
+
+    protected static function getEditEventFormSchema(): array
+    {
+        return [
+            Forms\Components\TextInput::make('title')
+                ->required(),
+            Forms\Components\DateTimePicker::make('start')
+                ->required(),
+            Forms\Components\DateTimePicker::make('end')
+                ->default(null),
+        ];
     }
 }
