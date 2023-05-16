@@ -14,6 +14,11 @@
         {{ $this->editEventForm }}
 
         <x-slot name="footer">
+            @if(static::canDelete())
+                <x-filament::button color="danger" x-on:click="isOpen = false; Livewire.emit('onDeleteEvent')">
+                    Supprimer
+                </x-filament::button>
+            @endif
             @if(!$this->editEventForm->isDisabled())
                 <x-filament::button type="submit" form="onEditEventSubmit">
                     {{ $this->getEditEventModalSubmitButtonLabel() }}
@@ -31,8 +36,5 @@
                 </x-filament::button>
             @endif
         </x-slot>
-        <x-filament::button color="danger" x-on:click="isOpen = false; Livewire.emit('onDeleteEvent')">
-            Delete
-        </x-filament::button>
     </x-filament::modal>
 </x-filament::form>
