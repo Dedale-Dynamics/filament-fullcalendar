@@ -14,6 +14,16 @@ trait CantManageEvents
         return false;
     }
 
+    public static function canDrop(?array $event = null): bool
+    {
+        return false;
+    }
+
+    public static function canResize(?array $event = null): bool
+    {
+        return false;
+    }
+
     public static function canDelete(?array $event = null): bool
     {
         return false;
