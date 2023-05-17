@@ -48,8 +48,9 @@
                     @if( $this::canFetchEvents() )
                         return $wire.fetchEvents({ start, end, allDay })
                             .then(events => {
-                                if(events.length == 0) return Object.values($data.cachedEvents)
+                                if(events.length == 0) return Object.values([])
                                 if(events[0].id) {
+                                    $data.cachedEvents = {};
                                     events.forEach((event) => $data.cachedEvents[event.id] = event)
                                     successCallback(Object.values($data.cachedEvents))
                                 } else{
@@ -75,10 +76,10 @@
     </x-filament::card>
 
     @if($this::canCreate())
-        <x:filament-fullcalendar::create-event-modal />
+        <x:filament-fullcalendar::create-event-modal/>
     @endif
 
     @if($this::canView())
-        <x:filament-fullcalendar::edit-event-modal />
+        <x:filament-fullcalendar::edit-event-modal/>
     @endif
 </x-filament::widget>

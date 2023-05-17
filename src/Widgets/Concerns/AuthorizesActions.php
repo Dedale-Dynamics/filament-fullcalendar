@@ -24,6 +24,16 @@ trait AuthorizesActions
         return true;
     }
 
+    public static function canDrop(?array $event = null): bool
+    {
+        return true;
+    }
+
+    public static function canResize(?array $event = null): bool
+    {
+        return true;
+    }
+
     public static function canDelete(?array $event = null): bool
     {
         return true;
